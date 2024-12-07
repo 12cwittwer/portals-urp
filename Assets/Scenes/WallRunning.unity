@@ -345,7 +345,7 @@ MonoBehaviour:
   crouchYScale: 0.5
   jumpForce: 12
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 0.2
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -378,13 +378,15 @@ MonoBehaviour:
   wallRunForce: 200
   wallJumpUpForce: 7
   wallJumpSideForce: 20
-  maxWallRunTime: 0.5
+  maxWallRunTime: 0.7
   reattachAngleThreshold: 15
   recentlyDetached: 0
   jumpKey: 32
+  gravityCounterForce: 20
   exitWallTime: 0.5
   wallCheckDistance: 0.7
   minJumpHeight: 0.5
+  cam: {fileID: 634005186}
   orientation: {fileID: 912789637}
 --- !u!1 &626424015
 GameObject:
@@ -578,6 +580,7 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 912789637}
+  camHolder: {fileID: 168407847}
 --- !u!114 &634005187
 MonoBehaviour:
   m_ObjectHideFlags: 0

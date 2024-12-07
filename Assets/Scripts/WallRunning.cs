@@ -23,6 +23,9 @@ public class WallRunning : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
+    [Header("Gravity")]
+    public float gravityCounterForce;
+
     [Header("Exiting")]
     private bool exitingWall;
     public float exitWallTime;
@@ -38,6 +41,7 @@ public class WallRunning : MonoBehaviour
 
 
     [Header("References")]
+    public PlayerCam cam;
     public Transform orientation;
     private PlayerMovement pm;
     Rigidbody rb;
@@ -118,6 +122,10 @@ public class WallRunning : MonoBehaviour
         pm.wallrunning = true;
         wallRunTimer = maxWallRunTime;
         recentlyDetached = false;
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        cam.DoFov(90f);
+        if (wallLeft) cam.DoTilt(-5f);
+        if (wallRight) cam.DoTilt(5f);
     }
 
     private bool CloseAngle() {
@@ -133,7 +141,6 @@ public class WallRunning : MonoBehaviour
 
     private void WallRunningMovement() {
         rb.useGravity = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
 
         Vector3 wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
@@ -151,12 +158,16 @@ public class WallRunning : MonoBehaviour
         if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0)) {
             rb.AddForce(-wallNormal * 100, ForceMode.Force);
         }
+
+        // rb.AddForce(transform.up * gravityCounterForce, ForceMode.Force);
     }
     private void StopWallRun() {
         Debug.Log("Stopping Wall Run" + Time.time);
         rb.useGravity = true;
         pm.wallrunning = false;
         recentlyDetached = true;
+        cam.DoFov(80f);
+        cam.DoTilt(0f);
     }
 
     private void WallJump() {
